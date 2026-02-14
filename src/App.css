@@ -1,7 +1,12 @@
 .landing {
   height: 100vh;
-  background-color: #2e7d32;
+  background-image: url("./assets/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
