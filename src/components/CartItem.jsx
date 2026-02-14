@@ -1,9 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart
-} from "../redux/CartSlice";
+import { updateQuantity, removeItem } from "../redux/CartSlice";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 
@@ -17,19 +13,39 @@ function CartItem() {
   );
 
   return (
-    <div>
+    <div className="cart-container">
       <Navbar />
       <h2>Shopping Cart</h2>
 
       {items.map(item => (
-        <div key={item.id}>
+        <div key={item.id} className="cart-item">
+          <img src={item.image} alt={item.name} />
           <p>{item.name}</p>
           <p>Unit Price: ₹{item.price}</p>
           <p>Total: ₹{item.price * item.quantity}</p>
 
-          <button onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
-          <button onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
-          <button onClick={() => dispatch(removeFromCart(item.id))}>
+          <button
+            className="increase-btn"
+            onClick={() =>
+              dispatch(updateQuantity({ id: item.id, amount: 1 }))
+            }
+          >
+            +
+          </button>
+
+          <button
+            className="decrease-btn"
+            onClick={() =>
+              dispatch(updateQuantity({ id: item.id, amount: -1 }))
+            }
+          >
+            -
+          </button>
+
+          <button
+            className="delete-btn"
+            onClick={() => dispatch(removeItem(item.id))}
+          >
             Delete
           </button>
         </div>
@@ -37,10 +53,14 @@ function CartItem() {
 
       <h3>Total Cart Amount: ₹{totalAmount}</h3>
 
-      <button>Checkout (Coming Soon)</button>
+      <button className="checkout-btn">
+        Checkout (Coming Soon)
+      </button>
 
       <br /><br />
-      <Link to="/plants">Continue Shopping</Link>
+      <Link to="/" className="continue-shopping-btn">
+        Continue Shopping
+      </Link>
     </div>
   );
 }
